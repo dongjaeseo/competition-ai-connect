@@ -28,6 +28,7 @@ DEBUG = False
 # CONFIG
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_PROJECT_DIR = os.path.dirname(PROJECT_DIR)
+print(ROOT_PROJECT_DIR)
 DATA_DIR = os.path.join(PROJECT_DIR, 'data')
 TRAIN_CONFIG_PATH = os.path.join(PROJECT_DIR, 'config/train_config.yaml')
 config = load_yaml(TRAIN_CONFIG_PATH)
@@ -71,7 +72,7 @@ if __name__ == '__main__':
     np.random.seed(RANDOM_SEED)
     random.seed(RANDOM_SEED)
 
-    ENCODER = 'timm-tf_efficientnet_lite4'
+    ENCODER = 'timm-efficientnet-b4'
     ENCODER_WEIGHTS = 'imagenet'
     CLASSES = ['hair']
     ACTIVATION = 'sigmoid'

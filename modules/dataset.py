@@ -19,18 +19,18 @@ class Dataset_tu(BaseDataset):
             augmentation=None, 
             preprocessing=None,
     ):
-        self.data_dir = '데이터 ROOT PATH'
+        self.data_dir = 'C:\\hairdata\\'
 
         if mode == 'train':
-            path = os.path.join(self.data_dir, '훈련 데이터 PATH')
+            path = os.path.join(self.data_dir, 'task02_train')
         elif mode =='val':
             path = os.path.join(self.data_dir, 'VALIDATION 데이터 PATH')
         else:
-            path = os.path.join(self.data_dir, 'TEST 데이터 PATH')
+            path = os.path.join(self.data_dir, 'task02_test')
 
 
         if not os.path.isdir(os.path.join(path, 'masks')):
-            os.makedirs(path+'masks')
+            os.makedirs(os.path.join(path, 'masks'))
         self.labels_fps = os.path.join(path, 'labels')
         self.labels_fps = [os.path.join(path, i) for i in self.labels_fps]
         self.polygon_to_mask(path)
@@ -69,18 +69,20 @@ class Dataset_tu(BaseDataset):
         return len(self.images_fps)
 
     def polygon_to_mask(self, path):
-        os.makedirs(os.path.join(path,'masks'))
+        # os.makedirs(os.path.join(path,'masks'))
         mask_dir = os.path.join(path,'masks')
+        json_file = utils.load_json(os.path.join(path,'labels.json'))
         for file_path in os.listdir(os.path.join(path,'images')):
-            label_file = open(os.path.join(path,'labels',file_path))
-            polygon = []
-            for line in label_file:
-                x,y = line.split(' ')
-                x,y = float(x), float(y)
-                polygon.append((x,y))
-            json_file = utils.load_json(os.path.join(path,'labels.json'))
-
+            # label_file = open(os.path.join(path,'labels',file_path))
+            # polygon = []
+            # for line in label_file:
+            #     x,y = line.split(' ')
+            #     x,y = float(x), float(y)
+            #     polygon.append((x,y))
+            print(file_path)
+            
             polygon_dict = json_file['polygon1']
+            print(polygon_dict)
             polygon = []
             
             for point in polygon_dict:

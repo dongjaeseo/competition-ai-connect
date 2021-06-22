@@ -7,3 +7,5 @@
 >> 현재 생각중인 가장 간단한건 좌우반전
 >> 추가적으로 cv2 changeperspective 를 통해 할수있을까?
 '''
+import torch
+print(torch.__version__)

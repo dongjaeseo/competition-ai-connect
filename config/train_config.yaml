@@ -16,7 +16,7 @@ TRAIN:
   batch_size: 8
   learning_rate: 0.0001
   early_stopping_patience: 15
-  model: 'unet'
+  model: 'deeplabv3plus'
   optimizer:
   scheduler:
   momentum:

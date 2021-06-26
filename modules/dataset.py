@@ -33,7 +33,7 @@ class Dataset_tu(BaseDataset):
             os.makedirs(path+'masks')
         self.labels_fps = os.path.join(path, 'labels')
         self.labels_fps = [os.path.join(path, i) for i in self.labels_fps]
-        self.polygon_to_mask(path)
+        # self.polygon_to_mask(path)
 
         self.images_fps = os.listdir(os.path.join(path, 'images'))
         self.images_fps = [os.path.join(path, 'images', i) for i in self.images_fps]

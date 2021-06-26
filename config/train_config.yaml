@@ -2,7 +2,7 @@ SEED:
   random_seed: 42
 
 DATALOADER:
-  num_workers: 8
+  num_workers: 0
   shuffle:
   pin_memory: True
   drop_last:
@@ -13,7 +13,7 @@ PREPROCESS:
 
 TRAIN:
   num_epochs: 1
-  batch_size: 8
+  batch_size: 2
   learning_rate: 0.0001
   early_stopping_patience: 15
   model: 'deeplabv3plus'

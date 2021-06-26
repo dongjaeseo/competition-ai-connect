@@ -28,6 +28,7 @@ DEBUG = False
 # CONFIG
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_PROJECT_DIR = os.path.dirname(PROJECT_DIR)
+print(ROOT_PROJECT_DIR)
 DATA_DIR = os.path.join(PROJECT_DIR, 'data')
 TRAIN_CONFIG_PATH = os.path.join(PROJECT_DIR, 'config/train_config.yaml')
 config = load_yaml(TRAIN_CONFIG_PATH)
@@ -148,15 +149,15 @@ if __name__ == '__main__':
         classes=CLASSES,
     )
 
-    # val_dataset = Dataset_tu(
-    #     mode = 'valid',
-    #     preprocessing=get_preprocessing(preprocessing_fn),
-    #     classes=CLASSES,
-    # )
+    val_dataset = Dataset_tu(
+        mode = 'valid',
+        preprocessing=get_preprocessing(preprocessing_fn),
+        classes=CLASSES,
+    )
     
     # Load dataset & dataloader
     train_loader = DataLoader(train_dataset, batch_size=TRAIN_BATCH_SIZE, num_workers=NUM_WORKERS, pin_memory=PIN_MEMORY, shuffle=True, drop_last=True)
-    # valid_loader = DataLoader(val_dataset, batch_size=EVAL_BATCH_SIZE, num_workers=NUM_WORKERS, pin_memory=PIN_MEMORY, shuffle=True, drop_last=False)
+    valid_loader = DataLoader(val_dataset, batch_size=EVAL_BATCH_SIZE, num_workers=NUM_WORKERS, pin_memory=PIN_MEMORY, shuffle=True, drop_last=False)
 
 
     # -------------------------------------------------------------
@@ -193,13 +194,13 @@ if __name__ == '__main__':
         verbose=True,
     )
 
-    # valid_epoch = smp.utils.train.ValidEpoch(
-    #     model,
-    #     loss=loss,
-    #     metrics=metrics,
-    #     device=DEVICE,
-    #     verbose=True,
-    # )
+    valid_epoch = smp.utils.train.ValidEpoch(
+        model,
+        loss=loss,
+        metrics=metrics,
+        device=DEVICE,
+        verbose=True,
+    )
 
 
     
@@ -249,12 +250,12 @@ if __name__ == '__main__':
     for epoch_index in tqdm(range(EPOCHS)):
 
         train_logs = train_epoch.run(train_loader)
-        # valid_logs = valid_epoch.run(valid_loader)
-        print('epoch : ',epoch_index)
+        valid_logs = valid_epoch.run(valid_loader)
+        print('epoch : ',epoch)
         print('train_logs', train_logs)
-        # print('val_logs', valid_logs)
+        print('val_logs', valid_logs)
 
-        # val_loss = valid_logs['dice_loss']
+        val_loss = valid_logs['dice_loss']
 
         
         # Performance record - csv & save elapsed_time

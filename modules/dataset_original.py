@@ -19,14 +19,14 @@ class Dataset_tu(BaseDataset):
             augmentation=None, 
             preprocessing=None,
     ):
-        self.data_dir = 'C:\\hairdata\\'
+        self.data_dir = '데이터 ROOT PATH'
 
         if mode == 'train':
-            path = os.path.join(self.data_dir, 'task02_train')
+            path = os.path.join(self.data_dir, '훈련 데이터 PATH')
         elif mode =='val':
             path = os.path.join(self.data_dir, 'VALIDATION 데이터 PATH')
         else:
-            path = os.path.join(self.data_dir, 'task02_test')
+            path = os.path.join(self.data_dir, 'TEST 데이터 PATH')
 
 
         if not os.path.isdir(os.path.join(path, 'masks')):
@@ -71,23 +71,24 @@ class Dataset_tu(BaseDataset):
     def polygon_to_mask(self, path):
         # os.makedirs(os.path.join(path,'masks'))
         mask_dir = os.path.join(path,'masks')
-        json_file = utils.load_json(os.path.join(path,'labels.json'))
+        for file_path in os.listdir(os.path.join(path,'images')):
+            label_file = open(os.path.join(path,'labels',file_path))
+            polygon = []
+            for line in label_file:
+                x,y = line.split(' ')
+                x,y = float(x), float(y)
+                polygon.append((x,y))
+            json_file = utils.load_json(os.path.join(path,'labels.json'))
 
-        json_file['annotations'] = sorted(json_file['annotations'], key = lambda x: list(x.items())[0])
-        i =0
-        while True:
-            print(json_file['annotations'][i]['file_name'])
-            i+=1
-
-        # for i, file_path in enumerate(os.listdir(os.path.join(path,'images'))):
-        #     polygon = []
-        #     for line in json_file['annotations'][i]['polygon1']:
-        #         xy = list(line.values())
-        #         polygon.append((xy[0], xy[1]))
-
-        #     img = Image.new('L', (512, 512), 'black')
-        #     ImageDraw.Draw(img).polygon(polygon, outline='white', fill='white')
-        #     img.save(os.path.join(mask_dir,file_path.split('.')[0]+'.jpg'))
+            polygon_dict = json_file['polygon1']
+            polygon = []
+            
+            for point in polygon_dict:
+                polygon.append(tuple(point.values()))
+            
+            img = Image.new('L', (512, 512), 'black')
+            ImageDraw.Draw(img).polygon(polygon, outline='white', fill='white')
+            img.save(os.path.join(mask_dir,file_path.split('.')[0]+'.jpg'))
 
 
 if __name__=='__main__':

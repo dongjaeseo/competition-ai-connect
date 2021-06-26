@@ -44,7 +44,6 @@ class Dataset_tu(BaseDataset):
         self.preprocessing = preprocessing
     
     def __getitem__(self, i):
-        
         # read data
         image = cv2.imread(self.images_fps[i])
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -64,6 +63,7 @@ class Dataset_tu(BaseDataset):
             image, mask = sample['image'], sample['mask']
             
         return image, mask
+        
         
     def __len__(self):
         return len(self.images_fps)
@@ -91,7 +91,6 @@ class Dataset_tu(BaseDataset):
             img = Image.new('L', (512, 512), 'black')
             ImageDraw.Draw(img).polygon(polygon, outline='white', fill='white')
             img.save(os.path.join(mask_dir,file_path.split('.')[0]+'.jpg'))
-
 
 if __name__=='__main__':
     a = Dataset_tu(mode= 'train')

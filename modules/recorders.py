@@ -151,6 +151,13 @@ class PerformanceRecorder():
         msg = f"Save best record {self.best_record_filepath}"
         self.logger.info(msg) if self.logger else None
 
+    def load_model(self,path):
+        print("load",path)
+        ckpt = torch.load(path)
+        self.model.load_state_dict(ckpt['model'])
+        self.optimizer.load_state_dict(ckpt['optimizer'])
+        self.scheduler.load_state_dict(ckpt['scheduler'])
+
     def save_weight(self)-> None:
         """Weight 저장
 
@@ -164,6 +171,7 @@ class PerformanceRecorder():
             'optimizer': self.optimizer.state_dict(),
             'scheduler': self.scheduler.state_dict()
         }
+        
         torch.save(check_point, self.weight_path)
         #torch.save(self.model.state_dict(), self.weight_path)
         msg = f"Model saved: {self.weight_path}"

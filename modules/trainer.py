@@ -8,7 +8,10 @@ REFERENCE:
 
 UPDATED:
 """
-
+import numpy as np 
+from PIL import Image 
+import matplotlib.pyplot as plt 
+from matplotlib import cm
 import os
 import numpy as np
 from sklearn.metrics import roc_auc_score, mean_squared_error
@@ -64,7 +67,7 @@ class CustomTrainer():
         self.train_loss_mean = 0
         self.train_loss_sum = 0
         self.train_score = 0
-
+        
         self.validation_loss_mean = 0
         self.validation_loss_sum = 0
         self.validation_score = 0
@@ -88,7 +91,7 @@ class CustomTrainer():
         self.model.train()
 
         for batch_index, data in enumerate(dataloader):
-
+            
             feature = data['feature'].to(self.device)
             answer = data['target']
 
@@ -198,22 +201,44 @@ class CustomTrainer():
             dataloader (`dataloader`)
             epoch_index (int)
         """
-        self.model.eval()
-
+        # PATH = "C:/Users/Choi Jun Ho/ai_competition_hairstyle/baseline/results/train/20210628041127/last.pt"
+        # self.model = torch.load(PATH)
+        # self.model.eval()
+        
         with torch.no_grad():
             for batch_index, data in enumerate(dataloader):
-
-                feature = data['feature'].to(self.device)
-                answer = data['target']
+                # print(batch_index)
+                # feature = data['feature'].to(self.device)
+                feature = data[0].to(self.device,dtype=torch.float)
+                # answer = data['target']
                 pred_feature = self.model(feature)
+                pred_feature = pred_feature.cpu()
+                # print(pred_feature)
+                # print(pred_feature.shape)
+                image = pred_feature.numpy()
+                image = pred_feature[0]
+                image = image.reshape(512,512)
+                image = image*255
+                image = np.where(image > 220, 255, 0)
+                # image = Image.fromarray(np.uint8(cm.plasma(image_array)*255))
+                image = Image.fromarray(np.uint8(image))
+                image.save(f'C:\\hairdata\\task02_test\\masks\\{batch_index:05d}.jpg')
+                #image.show()
 
-                target_list = feature.cpu().tolist()
-                target_pred_list = pred_feature.cpu().tolist()
+                #print(image.shape)
+                #print(image)
+                #target_list = feature.cpu().tolist()
+                #target_pred_list = pred_feature.cpu().tolist()
+
+                #print(target_list)
+                #print(target_pred_list)
 
                 # Get Score
-                element_score_list = [self.metric_fn(x[0], x[1]) for x in zip(target_list, target_pred_list)]
-                self.prediction_score_list.extend(element_score_list)
-                self.answer_list.extend(answer)
+                #print(self.metric_fn)
+                #print(self.metric_fn(target_list[0]))
+                #element_score_list = [self.metric_fn[1](x[0], x[1]) for x in zip(target_list, target_pred_list)]
+                #self.prediction_score_list.extend(element_score_list)
+                # self.answer_list.extend(answer)
 
     @staticmethod
     def anomaly_score(metric_score):

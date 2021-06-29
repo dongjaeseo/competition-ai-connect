@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "..\\..\\..\\Users\\Choi Jun Ho\\ai_competition_hairstyle\\ai_competition_hairstyle"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\test"
+		},
+		{
+			"path": "..\\train"
+		}
+	],
+	"settings": {}
+}

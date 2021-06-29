@@ -53,7 +53,7 @@ def save_csv(path: str, obj: dict, index=False):
 def save_json(path: str, obj:dict):
     try:
         with open(path, 'w') as f:
-            json.dump(obj, f, indent=4, sort_keys=False)
+            json.dump(obj, f, indent=None, sort_keys=False, separators=(',',':'))
         message = f'Json saved {path}'
     except Exception as e:
         message = f'Failed to save : {e}'

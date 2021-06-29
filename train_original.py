@@ -1,4 +1,4 @@
-'''
+
 import torch
 import numpy as np
 from tqdm import tqdm
@@ -73,7 +73,7 @@ if __name__ == '__main__':
     np.random.seed(RANDOM_SEED)
     random.seed(RANDOM_SEED)
 
-    ENCODER = 'timm-efficientnet-b4'
+    ENCODER = 'timm-efficientnet-b4111'
     ENCODER_WEIGHTS = 'imagenet'
     CLASSES = ['hair']
     ACTIVATION = 'sigmoid'
@@ -281,4 +281,3 @@ if __name__ == '__main__':
     performance_recorder.weight_path = os.path.join(PERFORMANCE_RECORD_DIR, 'last.pt')
     performance_recorder.save_weight()
 
-'''

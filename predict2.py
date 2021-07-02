@@ -159,6 +159,9 @@ if __name__ == '__main__':
     system_logger = get_logger(name='train', 
                                file_path=os.path.join(PERFORMANCE_RECORD_DIR, 'train_log.log'))
     
+    MODEL = 'fpn'
+    ENCODER = 'se_resnext50_32x4d'
+
     # Unet / PSPNet / DeepLabV3Plus
     if MODEL == 'unet':
         print("uuuuuu")
@@ -443,8 +446,8 @@ if __name__ == '__main__':
                                                model=model,
                                                optimizer=optimizer,
                                                scheduler=scheduler)
-    path = 'C:\\Users\\ai\\Documents\\카카오톡 받은 파일\\deeplabv3plus_resnet101_epoch6.pt'
-    # path = 'C:\\Users\\ai\\Documents\\카카오톡 받은 파일\\fpn_se_resnext50_32x4d_epoch0.pt'
+    # path = 'C:\\Users\\ai\\Documents\\카카오톡 받은 파일\\deeplabv3plus_resnet101_epoch2.pt'
+    path = 'C:\\Users\\ai\\Documents\\카카오톡 받은 파일\\fpn_se_resnext50_32x4d_epoch2.pt'
     
     #performance_recorder.load_model(path)
     # Save config yaml file

@@ -30,4 +30,4 @@ for i, file_path in tqdm(enumerate(os.listdir(os.path.join(test_mask_dir,'masks'
 #json_file = str(json_file)
 #json_file = json_file.replace(' ', '')
 #print(json_file)
-utils.save_json(os.path.join(test_mask_dir,'submit0702_1000.json') , json_file)
+utils.save_json(os.path.join(test_mask_dir,'submit0702_1200.json') , json_file)
